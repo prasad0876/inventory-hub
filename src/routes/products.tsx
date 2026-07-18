@@ -57,7 +57,7 @@ function ProductsPage() {
   }, [products, q, search, priceMax]);
 
   const setSearch = (patch: Record<string, string | undefined>) =>
-    navigate({ search: (prev) => ({ ...prev, ...patch }) as any });
+    navigate({ search: (prev: any) => ({ ...prev, ...patch }) as any });
 
   return (
     <div className="min-h-screen bg-background">
