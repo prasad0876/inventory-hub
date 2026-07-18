@@ -19,6 +19,7 @@ import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminInventoryRouteImport } from './routes/_authenticated/admin/inventory'
 import { Route as AuthenticatedAdminDuesRouteImport } from './routes/_authenticated/admin/dues'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedAdminActivityRouteImport } from './routes/_authenticated/admin/activity'
 
 const ProductsRoute = ProductsRouteImport.update({
   id: '/products',
@@ -72,12 +73,19 @@ const AuthenticatedAdminCategoriesRoute =
     path: '/admin/categories',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminActivityRoute =
+  AuthenticatedAdminActivityRouteImport.update({
+    id: '/admin/activity',
+    path: '/admin/activity',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/products': typeof ProductsRouteWithChildren
   '/products/$id': typeof ProductsIdRoute
+  '/admin/activity': typeof AuthenticatedAdminActivityRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/dues': typeof AuthenticatedAdminDuesRoute
   '/admin/inventory': typeof AuthenticatedAdminInventoryRoute
@@ -89,6 +97,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/products': typeof ProductsRouteWithChildren
   '/products/$id': typeof ProductsIdRoute
+  '/admin/activity': typeof AuthenticatedAdminActivityRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/dues': typeof AuthenticatedAdminDuesRoute
   '/admin/inventory': typeof AuthenticatedAdminInventoryRoute
@@ -102,6 +111,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/products': typeof ProductsRouteWithChildren
   '/products/$id': typeof ProductsIdRoute
+  '/_authenticated/admin/activity': typeof AuthenticatedAdminActivityRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/dues': typeof AuthenticatedAdminDuesRoute
   '/_authenticated/admin/inventory': typeof AuthenticatedAdminInventoryRoute
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/products'
     | '/products/$id'
+    | '/admin/activity'
     | '/admin/categories'
     | '/admin/dues'
     | '/admin/inventory'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/products'
     | '/products/$id'
+    | '/admin/activity'
     | '/admin/categories'
     | '/admin/dues'
     | '/admin/inventory'
@@ -138,6 +150,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/products'
     | '/products/$id'
+    | '/_authenticated/admin/activity'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/dues'
     | '/_authenticated/admin/inventory'
@@ -224,10 +237,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/activity': {
+      id: '/_authenticated/admin/activity'
+      path: '/admin/activity'
+      fullPath: '/admin/activity'
+      preLoaderRoute: typeof AuthenticatedAdminActivityRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminActivityRoute: typeof AuthenticatedAdminActivityRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminDuesRoute: typeof AuthenticatedAdminDuesRoute
   AuthenticatedAdminInventoryRoute: typeof AuthenticatedAdminInventoryRoute
@@ -236,6 +257,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminActivityRoute: AuthenticatedAdminActivityRoute,
   AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
   AuthenticatedAdminDuesRoute: AuthenticatedAdminDuesRoute,
   AuthenticatedAdminInventoryRoute: AuthenticatedAdminInventoryRoute,
