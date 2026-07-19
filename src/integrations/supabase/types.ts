@@ -47,6 +47,24 @@ export type Database = {
         }
         Relationships: []
       }
+      app_settings: {
+        Row: {
+          admin_initialized: boolean
+          id: number
+          updated_at: string
+        }
+        Insert: {
+          admin_initialized?: boolean
+          id?: number
+          updated_at?: string
+        }
+        Update: {
+          admin_initialized?: boolean
+          id?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string

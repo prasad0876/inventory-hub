@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ProductCard } from "@/components/product-card";
 import { listProducts } from "@/lib/products.functions";
+import { getAppSettings } from "@/lib/app-settings.functions";
 
 const productsQO = queryOptions({ queryKey: ["products"], queryFn: () => listProducts() });
 
@@ -18,8 +19,10 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Automotive parts catalogue with real-time stock availability." },
     ],
   }),
-  loader: ({ context }) => {
-    context.queryClient.ensureQueryData(productsQO);
+  loader: async ({ context }) => {
+    const settings = await getAppSettings();
+    if (!settings.adminInitialized) throw redirect({ to: "/auth" });
+    await context.queryClient.ensureQueryData(productsQO);
   },
   component: Home,
 });
