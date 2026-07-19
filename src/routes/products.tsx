@@ -20,7 +20,7 @@ const categoriesQO = queryOptions({ queryKey: ["categories"], queryFn: () => lis
 
 export const Route = createFileRoute("/products")({
   validateSearch: searchSchema,
-  head: () => ({ meta: [{ title: "All Products — VoltMart" }, { name: "description", content: "Browse and filter the full electronics catalogue." }] }),
+  head: () => ({ meta: [{ title: "All Products — Sai Srinivas Automobiles" }, { name: "description", content: "Browse and filter the full automotive parts catalogue." }] }),
   loader: ({ context }) => {
     context.queryClient.ensureQueryData(productsQO);
     context.queryClient.ensureQueryData(categoriesQO);
