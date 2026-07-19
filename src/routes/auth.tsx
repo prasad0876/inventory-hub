@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Cpu } from "lucide-react";
+import { getAppSettings, markAdminInitialized } from "@/lib/app-settings.functions";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "Admin Sign In" }, { name: "robots", content: "noindex" }] }),
@@ -14,21 +15,42 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [initialized, setInitialized] = useState<boolean | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) navigate({ to: "/admin", replace: true });
     });
+    getAppSettings().then((s) => setInitialized(s.adminInitialized)).catch(() => setInitialized(true));
   }, [navigate]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      setLoading(false);
+      return toast.error(error.message);
+    }
+    // Check if signed-in user is admin
+    const { data: userData } = await supabase.auth.getUser();
+    const uid = userData.user?.id;
+    let isAdmin = false;
+    if (uid) {
+      const { data: roleRow } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", uid)
+        .eq("role", "admin")
+        .maybeSingle();
+      isAdmin = !!roleRow;
+    }
+    if (isAdmin && initialized === false) {
+      try { await markAdminInitialized(); } catch { /* noop */ }
+    }
     setLoading(false);
-    if (error) return toast.error(error.message);
     toast.success("Signed in");
-    navigate({ to: "/admin", replace: true });
+    navigate({ to: isAdmin ? "/admin" : "/", replace: true });
   };
 
   return (
@@ -39,8 +61,12 @@ function AuthPage() {
             <Cpu className="h-4 w-4" />
           </span>
           <div>
-            <div className="font-semibold">Sai Srinivas Automobiles Admin</div>
-            <div className="text-xs text-muted-foreground">Restricted access</div>
+            <div className="font-semibold">
+              {initialized === false ? "Initial Admin Setup" : "Sai Srinivas Automobiles Admin"}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {initialized === false ? "Sign in once to unlock the storefront" : "Restricted access"}
+            </div>
           </div>
         </div>
         <label className="text-xs font-semibold uppercase text-muted-foreground">Email</label>
