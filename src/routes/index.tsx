@@ -12,10 +12,10 @@ const productsQO = queryOptions({ queryKey: ["products"], queryFn: () => listPro
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "VoltMart — Electronics Inventory Store" },
-      { name: "description", content: "Browse laptops, mobiles, monitors, SSDs and more with live stock availability." },
-      { property: "og:title", content: "VoltMart — Electronics Inventory Store" },
-      { property: "og:description", content: "Live electronics catalogue with real-time stock." },
+      { title: "Sai Srinivas Automobiles" },
+      { name: "description", content: "Browse automotive parts and accessories with live stock availability." },
+      { property: "og:title", content: "Sai Srinivas Automobiles" },
+      { property: "og:description", content: "Automotive parts catalogue with real-time stock availability." },
     ],
   }),
   loader: ({ context }) => {

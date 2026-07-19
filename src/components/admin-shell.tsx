@@ -33,7 +33,7 @@ export function AdminShell({ children, title }: { children: ReactNode; title: st
             <Cpu className="h-4 w-4" />
           </span>
           <div>
-            <div className="font-semibold leading-tight">VoltMart</div>
+            <div className="font-semibold leading-tight">Sai Srinivas Automobiles</div>
             <div className="text-xs text-muted-foreground">Admin</div>
           </div>
         </Link>

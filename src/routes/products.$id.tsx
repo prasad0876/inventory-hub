@@ -13,7 +13,7 @@ export const Route = createFileRoute("/products/$id")({
     const row = await context.queryClient.ensureQueryData(qo(params.id));
     if (!row) throw notFound();
   },
-  head: () => ({ meta: [{ title: "Product — VoltMart" }] }),
+  head: () => ({ meta: [{ title: "Product — Sai Srinivas Automobiles" }] }),
   component: ProductPage,
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">

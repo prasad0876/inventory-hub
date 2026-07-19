@@ -13,7 +13,7 @@ export function SiteHeader() {
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
             <Cpu className="h-4 w-4" />
           </span>
-          <span>VoltMart</span>
+          <span>Sai Srinivas Automobiles</span>
         </Link>
         <form
           className="ml-4 hidden flex-1 items-center gap-2 md:flex"
