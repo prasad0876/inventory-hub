@@ -11,7 +11,7 @@ export function SiteHeader() {
 
   useEffect(() => {
     if (!menuOpen) return;
-    const onDown = (e: MouseEvent) => {
+    const onDown = (e: Event) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
     };
     document.addEventListener("mousedown", onDown);
