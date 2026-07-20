@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { SlidersHorizontal } from "lucide-react";
 import { z } from "zod";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -35,6 +36,7 @@ function ProductsPage() {
   const { data: cats } = useSuspenseQuery(categoriesQO);
   const [q, setQ] = useState(search.q ?? "");
   const [priceMax, setPriceMax] = useState<number | "">("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const brands = useMemo(() => Array.from(new Set(products.map((p: any) => p.brand).filter(Boolean))).sort(), [products]);
 
@@ -63,10 +65,20 @@ function ProductsPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <h1 className="mb-6 text-2xl font-bold text-foreground">All products</h1>
+        <h1 className="mb-4 text-2xl font-bold text-foreground">All products</h1>
+
+        <button
+          type="button"
+          onClick={() => setFiltersOpen((v) => !v)}
+          className="mb-4 inline-flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium text-foreground lg:hidden"
+          aria-expanded={filtersOpen}
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+          {filtersOpen ? "Hide filters" : "Show filters"}
+        </button>
 
         <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
-          <aside className="space-y-6 rounded-2xl border border-border bg-card p-4 h-max">
+          <aside className={`${filtersOpen ? "block" : "hidden"} lg:block space-y-6 rounded-2xl border border-border bg-card p-4 h-max`}>
             <div>
               <label className="text-xs font-semibold uppercase text-muted-foreground">Search</label>
               <input
