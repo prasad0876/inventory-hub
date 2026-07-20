@@ -28,7 +28,7 @@ export function ProductCard({ p }: { p: ProductCardData }) {
     <Link
       to="/products/$id"
       params={{ id: p.id }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]"
+      className="group block overflow-hidden rounded-2xl border border-border bg-card transition md:hover:-translate-y-0.5 md:hover:shadow-[var(--shadow-card)]"
     >
       <div className="aspect-[4/3] overflow-hidden bg-secondary">
         {p.image_url ? (
