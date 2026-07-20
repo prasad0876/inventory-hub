@@ -19,7 +19,7 @@ const searchSchema = z.object({
 const productsQO = queryOptions({ queryKey: ["products"], queryFn: () => listProducts() });
 const categoriesQO = queryOptions({ queryKey: ["categories"], queryFn: () => listCategories() });
 
-export const Route = createFileRoute("/products")({
+export const Route = createFileRoute("/products/")({
   validateSearch: searchSchema,
   head: () => ({ meta: [{ title: "All Products — Sai Srinivas Automobiles" }, { name: "description", content: "Browse and filter the full automotive parts catalogue." }] }),
   loader: ({ context }) => {
