@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
       { title: "Sai Srinivas Automobiles" },
       { name: "description", content: "Browse automotive parts and accessories with live stock availability." },
       { property: "og:title", content: "Sai Srinivas Automobiles" },
-      { property: "og:description", content: "Automotive parts catalogue with real-time stock availability." },
+      { property: "og:description", content: "Browse automotive parts and accessories with live stock availability." },
     ],
   }),
   loader: async ({ context }) => {
